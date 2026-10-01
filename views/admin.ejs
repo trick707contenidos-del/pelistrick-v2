@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head><title>Admin - Pelistrick</title><meta name="viewport" content="width=device-width, initial-scale=1">
+<style>body{margin:0;background:#111;color:#fff;font-family:sans-serif}header{background:#000;padding:15px;display:flex;justify-content:space-between}.container{padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:20px}.box{background:#1e1e1e;padding:20px;border-radius:10px}input,select{width:100%;padding:8px;margin:5px 0;border-radius:5px;border:none;box-sizing:border-box}button{padding:10px;background:#e50914;color:#fff;border:none;border-radius:5px;cursor:pointer}table{width:100%;font-size:13px}td{padding:5px;border-bottom:1px solid #333}img{width:40px;height:60px;object-fit:cover}@media(max-width:800px){.container{grid-template-columns:1fr}}</style>
+</head>
+<body>
+<header><h3>Panel Admin - <%= user.username %></h3><a href="/logout" style="color:#fff">Salir</a></header>
+<div class="container">
+<div class="box">
+<h3>Agregar Contenido</h3>
+<form method="POST" action="/admin/add-content" enctype="multipart/form-data">
+<input name="title" placeholder="Título" required>
+<input name="category" placeholder="Categoría (Acción, Comedia)">
+<select name="type"><option value="pelicula">Película</option><option value="serie">Serie</option></select>
+<input name="url" placeholder="Link embed / mp4 / m3u8" required>
+<p style="font-size:12px">Poster (subir archivo):</p>
+<input type="file" name="image" accept="image/*">
+<button>Guardar</button>
+</form>
+</div>
+<div class="box">
+<h3>Crear Usuario / Reseller</h3>
+<form method="POST" action="/admin/add-user">
+<input name="username" placeholder="Usuario" required>
+<input name="password" placeholder="Contraseña" required>
+<select name="role"><option value="client">Cliente</option><option value="reseller">Reseller</option><option value="admin">Admin</option></select>
+<input name="credits" placeholder="Créditos" type="number" value="10">
+<button>Crear Usuario</button>
+</form>
+<h4>Usuarios</h4>
+<table><% users.forEach(u=>{ %><tr><td><%= u.username %></td><td><%= u.role %></td><td><%= u.credits %></td><td><a href="/admin/delete-user/<%= u.id %>" style="color:red">X</a></td></tr><% }) %></table>
+</div>
+</div>
+<div class="box" style="margin:20px">
+<h3>Configuración</h3>
+<form method="POST" action="/admin/settings">
+<input name="site_name" value="<%= settings.site_name %>" placeholder="Nombre sitio">
+<input name="whatsapp" value="<%= settings.whatsapp %>" placeholder="WhatsApp">
+<button>Guardar Config</button>
+</form>
+</div>
+<div class="box" style="margin:20px">
+<h3>Contenidos (<%= contents.length %>)</h3>
+<table>
+<tr><th>Img</th><th>Título</th><th>Tipo</th><th>Borrar</th></tr>
+<% contents.forEach(c=>{ %><tr><td><img src="<%= c.image %>"></td><td><%= c.title %></td><td><%= c.type %></td><td><a href="/admin/delete-content/<%= c.id %>" style="color:red">Eliminar</a></td></tr><% }) %>
+</table>
+</div>
+</body>
+</html>
