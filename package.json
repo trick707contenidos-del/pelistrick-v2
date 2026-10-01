@@ -1,0 +1,13 @@
+{
+  "name": "pelistrick-v2",
+  "version": "2.0.0",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ejs": "^3.1.9",
+    "better-sqlite3": "^9.1.1",
+    "express-session": "^1.17.3",
+    "multer": "^1.4.5-lts.1"
+  }
+}
